@@ -1,0 +1,6 @@
+1，aop实现，aop责任链
+2，BIO，NIO，AIO区别
+3，synchronized（互斥锁，自动底层unlock，作用与对象的时候是同一把锁）和lock（需要手动unlock，）的区别。
+4，各种锁，
+5，volatile关键字
+6，三层架构，dao（数据持久），service（业务逻辑层）
