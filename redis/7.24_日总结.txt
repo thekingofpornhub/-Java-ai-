@@ -1,0 +1,18 @@
+1,redis的键淘汰策略
+定期删除（非全表扫描，而是基于贪心算法而进行的）
+ex：例如一个字典每次进行0.2的检测，如果这0.2的字典中有百分之20的过期键，则进行继续扫描
+惰性删除
+访问的时候检测过期性，如果过期则直接进行删除
+一般来说这两个策略是一起进行的
+2，redis中的内存淘汰策略
+    1，直接限制写入noeviction
+      描述：当内存达到限制时，不再接受写入请求，直接返回错误。
+    2，LRU（最久未使用）
+    3.volatile-lru（只对设置了过期时间的key进行LRU）
+    4，allkeys-random（纯随机，无论是否设置了过期键）
+    5，volatile-random（纯随机删除设置了过期的键）
+    6， volatile-ttl (Time to Live)淘汰寿命短的
+    7，allkeys-lfu (Least Frequently Used)
+    8，volatile-lfu只对设置过期的键进行
+3，redis中的分布式锁策略（针对多个节点的操作来保持数据的一致性）
+  redlock
