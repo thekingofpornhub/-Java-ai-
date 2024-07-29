@@ -16,6 +16,8 @@ m_creator_ids(创建该事务的id)
 m_low_limit_id(目前出现过的id+1)
 m_up_limit_id（m_ids中最小的id，小于这个id的数据版本均可见）
 遵循一个可见性原则，将要被修改的数据的 DB_TRX_ID 取出来，与系统当前其他活跃事务的 ID 去对比。
+ DB_TRX_ID（当前id）
+ DB_ROLL_PTR回滚指针
 如果 DB_TRX_ID 跟 Read View 的属性做了某些比较，不符合可见性，那就通过 DB_ROLL_PTR 回滚指针去取出 Undo Log 中的 DB_TRX_ID 再比较。
 即遍历链表的 DB_TRX_ID （从链首到链尾，即从最近的一次修改查起），直到找到满足特定条件的 DB_TRX_ID，那么这个 DB_TRX_ID 所在的记录就是当前事务能看见的最新老版本。
 Read View（怎样判断这个事务究竟能不能看到快照）
