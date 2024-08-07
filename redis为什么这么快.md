@@ -6,6 +6,12 @@ Redis 采用单线程模型可以避免了多线程之间的竞争，省去了�
 
 #### redis6.0中采用了多路的io线程进行高效处理（但是对于redis的命令执行依旧使用单线程）
 
+在redis6.0后
+
+Redis 在启动的时候，默认情况下会额外创建 6 个线程（这里的线程数不包括主线程）： Redis-server ： 
+
+Redis的主线程，主要负责执行命令； bio_close_file、bio_aof_fsync、bio_lazy_free：三个后台线程，分别异步处理关闭文件任务、AOF刷盘任务、释放内存任务； io_thd_1、io_thd_2、io_thd_3：三个 I/O 线程，io-threads 默认是 4 ，所以会启动 3（4-1）个 I/O 多线程，用来分担 Redis 网络 I/O 的压力
+
 Redis 采用了 I/O 多路复用机制处理大量的客户端 Socket 请求，IO 多路复用机制是指一个线程处理多个 IO 流，就是我们经常听到的 select/epoll 机制。简单来说，在 Redis 只运行单线程的情况下，该机制允许内核中，同时存在多个监听 Socket 和已连接 Socket。内核会一直监听这些 Socket 上的连接请求或数据请求。一旦有请求到达，就会交给 Redis 线程处理，这就实现了一个 Redis 线程处理多个 IO 流的效果。
 
 
